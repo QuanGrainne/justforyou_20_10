@@ -50,6 +50,7 @@ export const PhotoModal = ({ flower, onClose }) => {
           src={flower.image}
           alt={flower.alt || 'Ảnh kỷ niệm'}
           className={styles.fullImg}
+          decoding="async"
         />
       </motion.div>
     </motion.div>

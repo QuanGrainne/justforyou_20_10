@@ -290,15 +290,17 @@ export const PaperRose = ({
           className={styles.roseSvg}
           style={{ overflow: 'visible' }}
         >
-          <defs>
-            {/* Hiệu ứng bóng đổ giấy 3D mềm mại cho từng cánh hoa */}
-            <filter id={filterId} x="-20%" y="-20%" width="140%" height="140%">
-              <feDropShadow dx="0" dy="2" stdDeviation="2.5" floodColor={shadowColor} />
-            </filter>
-          </defs>
+          {/* Hiệu ứng bóng đổ chỉ bật cho hoa có ảnh hoặc hoa trung tâm để tiết kiệm RAM trên điện thoại */}
+          {(flower?.hasPhoto || isFeatured) && (
+            <defs>
+              <filter id={filterId} x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow dx="0" dy="2" stdDeviation="2.5" floodColor={shadowColor} />
+              </filter>
+            </defs>
+          )}
 
           {/* Vòng ngoài cùng: 7 cánh lớn uốn lượn tự nhiên */}
-          <g filter={`url(#${filterId})`}>
+          <g filter={(flower?.hasPhoto || isFeatured) ? `url(#${filterId})` : undefined}>
             <PetalLayer
               cx={r}
               cy={r}
@@ -313,7 +315,7 @@ export const PaperRose = ({
           </g>
 
           {/* Vòng thứ 2: 6 cánh uốn lượn xen kẽ */}
-          <g filter={`url(#${filterId})`}>
+          <g filter={(flower?.hasPhoto || isFeatured) ? `url(#${filterId})` : undefined}>
             <PetalLayer
               cx={r}
               cy={r}
@@ -327,7 +329,7 @@ export const PaperRose = ({
           </g>
 
           {/* Vòng thứ 3: 6 cánh thu nhỏ dần */}
-          <g filter={`url(#${filterId})`}>
+          <g filter={(flower?.hasPhoto || isFeatured) ? `url(#${filterId})` : undefined}>
             <PetalLayer
               cx={r}
               cy={r}
@@ -341,7 +343,7 @@ export const PaperRose = ({
           </g>
 
           {/* Vòng thứ 4: 5 cánh ôm lấy phần tâm */}
-          <g filter={`url(#${filterId})`}>
+          <g filter={(flower?.hasPhoto || isFeatured) ? `url(#${filterId})` : undefined}>
             <PetalLayer
               cx={r}
               cy={r}
@@ -357,7 +359,7 @@ export const PaperRose = ({
           {/* NẾU KHÔNG CÓ ẢNH: vẽ tiếp các lớp cánh cuộn sâu và xoắn ốc ở tâm hoa */}
           {!flower?.hasPhoto && (
             <>
-              <g filter={`url(#${filterId})`}>
+              <g>
                 <PetalLayer
                   cx={r}
                   cy={r}
@@ -404,6 +406,8 @@ export const PaperRose = ({
                 src={flower.image}
                 alt={flower.alt || 'Ảnh kỷ niệm'}
                 className={`${styles.photoImage} ${hasValidPhoto ? styles.visible : styles.hidden}`}
+                loading="lazy"
+                decoding="async"
                 onLoad={handleImgLoad}
                 onError={() => setHasValidPhoto(false)}
               />
