@@ -231,8 +231,6 @@ export const PaperRose = ({
   stemHeight = 650,
   onClick,
 }) => {
-  const [hasValidPhoto, setHasValidPhoto] = useState(false);
-
   const palette = ROSE_PALETTES[flower?.colorType] || ROSE_PALETTES.pink;
   const { layers, edge, shadowColor } = palette;
 
@@ -244,15 +242,6 @@ export const PaperRose = ({
   // - Hoa có ảnh khác: ảnh ~46% size (~52-60px)
   // Đủ lớn để nhìn rõ khuôn mặt, đồng thời cánh hoa vẫn ôm trọn vòng ngoài
   const photoSize = Math.round(size * (isFeatured ? 0.42 : 0.46));
-
-  const handleImgLoad = (e) => {
-    // Nhận diện ảnh thật (kích thước > 15px) để hiển thị
-    if (e.target.naturalWidth > 15 && e.target.naturalHeight > 15) {
-      setHasValidPhoto(true);
-    } else {
-      setHasValidPhoto(false);
-    }
-  };
 
   const handleClick = () => {
     if (flower?.hasPhoto && onClick) {
@@ -395,37 +384,16 @@ export const PaperRose = ({
         </svg>
 
         {/* ── ẢNH CÁ NHÂN HIỂN THỊ TRỰC TIẾP TRÊN BÔNG HOA ── */}
-        {flower?.hasPhoto && (
+        {flower?.hasPhoto && flower?.image && (
           <div
             className={styles.photoContainer}
             style={{ width: photoSize, height: photoSize }}
           >
-            {/* Ảnh kỷ niệm */}
-            {flower.image && (
-              <img
-                src={flower.image}
-                alt={flower.alt || 'Ảnh kỷ niệm'}
-                className={`${styles.photoImage} ${hasValidPhoto ? styles.visible : styles.hidden}`}
-                loading="lazy"
-                decoding="async"
-                onLoad={handleImgLoad}
-                onError={() => setHasValidPhoto(false)}
-              />
-            )}
-
-            {/* Nhụy hoa dự phòng nghệ thuật khi ảnh chưa thay thế (không hiện icon lỗi) */}
-            {!hasValidPhoto && (
-              <div
-                className={styles.pistilFallback}
-                style={{
-                  background: `radial-gradient(circle, ${layers[1]} 20%, ${layers[3]} 100%)`,
-                  borderColor: '#ffffff',
-                }}
-              >
-                <span className={styles.pistilHeart}>🌸</span>
-                <span className={styles.pistilNumber}>#{flower.id}</span>
-              </div>
-            )}
+            <img
+              src={flower.image}
+              alt={flower.alt || 'Ảnh kỷ niệm'}
+              className={styles.photoImage}
+            />
           </div>
         )}
       </div>
