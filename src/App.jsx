@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PaperRose } from './components/PaperRose';
 import { FlowerGarden } from './components/FlowerGarden';
 import { MusicButton } from './components/MusicButton';
+import { sendNotification } from './utils/notify';
 import { Sparkles } from 'lucide-react';
 import styles from './App.module.css';
 
@@ -12,8 +13,28 @@ export default function App() {
 
   const initialRose = { id: 0, hasPhoto: false, colorType: 'hotpink', alt: 'Đóa hồng kỳ diệu' };
 
+  // Gửi thông báo ngay khi người ấy vừa truy cập trang web
+  useEffect(() => {
+    sendNotification(
+      '🌸 Có người vừa mở web 20/10!',
+      'Người ấy vừa mở đường link trang web quà tặng của bạn!',
+      ['tada', 'sparkles', 'rose']
+    );
+  }, []);
+
   const handleBloom = () => {
     if (isFlashing || hasBloomed) return;
+    
+    // Kích hoạt phát nhạc ngay lập tức khi chạm bông hoa
+    window.dispatchEvent(new Event('start-music'));
+
+    // Gửi thông báo đến điện thoại
+    sendNotification(
+      '🌹 Đóa hoa đã nở!',
+      'Người ấy vừa chạm vào bông hoa để bung nở khu vườn hoa hồng!',
+      ['rose', 'heart', 'blossom']
+    );
+
     setIsFlashing(true);
     setTimeout(() => { setHasBloomed(true); setIsFlashing(false); }, 300);
   };

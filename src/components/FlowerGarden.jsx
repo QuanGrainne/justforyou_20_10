@@ -4,6 +4,7 @@ import { PaperRose, RoseBud } from './PaperRose';
 import { Letter } from './Letter';
 import { PhotoModal } from './PhotoModal';
 import { flowersData } from '../data/flowers';
+import { sendNotification } from '../utils/notify';
 import styles from './FlowerGarden.module.css';
 
 /**
@@ -27,6 +28,42 @@ const getStemHeight = (topStr) => {
 export const FlowerGarden = ({ onReplayBloom }) => {
   const [showLetter, setShowLetter] = useState(true);
   const [selectedPhoto, setSelectedPhoto] = useState(null);
+
+  const handlePhotoClick = (flower) => {
+    setSelectedPhoto(flower);
+    sendNotification(
+      `📸 Người ấy đang ngắm ảnh kỷ niệm!`,
+      `Người ấy vừa bấm xem ảnh phóng to: ${flower.alt || ('Ảnh số ' + flower.id)}`,
+      ['camera', 'framed_picture', 'eyes']
+    );
+  };
+
+  const handleOpenLetter = () => {
+    setShowLetter(true);
+    sendNotification(
+      '💌 Đọc lại lá thư',
+      'Người ấy vừa bấm nút đọc lại lá thư 20/10.',
+      ['envelope', 'love_letter']
+    );
+  };
+
+  const handleCloseLetter = () => {
+    setShowLetter(false);
+    sendNotification(
+      '🌸 Bắt đầu ngắm vườn hoa',
+      'Người ấy đã đọc xong thư và bấm "Ngắm vườn hoa"!',
+      ['blossom', 'eyes']
+    );
+  };
+
+  const handleReplay = () => {
+    sendNotification(
+      '🔄 Cho hoa nở lại',
+      'Người ấy vừa bấm cho hoa nở lại từ đầu.',
+      ['repeat', 'sparkles']
+    );
+    if (onReplayBloom) onReplayBloom();
+  };
 
   // ─────────────────────────────────────────────────────────────────────────
   // ĐÚNG 25 BÔNG HOA CÓ ẢNH KỶ NIỆM HIỂN THỊ TRỰC TIẾP (photo1.jpg -> photo25.jpg)
@@ -298,17 +335,17 @@ export const FlowerGarden = ({ onReplayBloom }) => {
             isFeatured={pf.isFeatured || false}
             swayDelay={idx * 0.25}
             swayDuration={4.8 + idx * 0.2}
-            onClick={(flower) => setSelectedPhoto(flower)}
+            onClick={handlePhotoClick}
           />
         </motion.div>
       ))}
 
       {/* ── 2 NÚT ĐÁY MÀN HÌNH ── */}
       <div className={styles.controls}>
-        <button className={styles.pillBtn} onClick={() => setShowLetter(true)}>
+        <button className={styles.pillBtn} onClick={handleOpenLetter}>
           Đọc lại thiệp
         </button>
-        <button className={styles.pillBtn} onClick={onReplayBloom}>
+        <button className={styles.pillBtn} onClick={handleReplay}>
           Cho hoa nở lại
         </button>
       </div>
@@ -316,7 +353,7 @@ export const FlowerGarden = ({ onReplayBloom }) => {
       {/* ── LÁ THƯ 20/10 ── */}
       <AnimatePresence>
         {showLetter && (
-          <Letter onClose={() => setShowLetter(false)} />
+          <Letter onClose={handleCloseLetter} />
         )}
       </AnimatePresence>
 
