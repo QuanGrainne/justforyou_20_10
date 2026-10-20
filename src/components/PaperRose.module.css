@@ -1,0 +1,134 @@
+.roseWrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: default;
+  user-select: none;
+  touch-action: manipulation;
+  transform-origin: 50% 100%;
+}
+
+.featured {
+  z-index: 35 !important;
+}
+
+.hasPhotoFlower {
+  cursor: pointer !important;
+}
+
+.hasPhotoFlower:hover .bloomWrap {
+  filter: drop-shadow(0 12px 24px rgba(255, 255, 255, 0.45));
+}
+
+.bloomWrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.roseSvg {
+  display: block;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.16));
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.roseWrap:hover .roseSvg {
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.24));
+}
+
+/* Khung chứa ảnh kỷ niệm ở giữa hoa */
+.photoContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2.5px solid #ffffff;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.22), inset 0 0 4px rgba(0, 0, 0, 0.1);
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  pointer-events: none; /* Không cần click vào ảnh */
+}
+
+.photoImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.photoImage.visible {
+  opacity: 1;
+  display: block;
+}
+
+.photoImage.hidden {
+  opacity: 0;
+  display: none;
+}
+
+.roseWrap:hover .photoImage.visible {
+  transform: scale(1.08);
+}
+
+/* Nhụy hoa nghệ thuật dự phòng (khi chưa tải ảnh) */
+.pistilFallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.9);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.pistilHeart {
+  font-size: 16px;
+  line-height: 1;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.15));
+}
+
+.pistilNumber {
+  font-size: 10px;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  margin-top: 1px;
+}
+
+/* Thân cây hoa hồng cành dài vươn xuống mãi bên dưới */
+.stemContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 42px;
+  pointer-events: none;
+  z-index: -1;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.14));
+}
+
+/* Nụ hoa vươn cao */
+.budWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+}
+
+.budStem {
+  width: 2.5px;
+  flex: 1;
+  background: linear-gradient(to bottom, #43a047, #2e7d32);
+  border-radius: 2px;
+}

@@ -1,0 +1,101 @@
+.musicContainer {
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  z-index: 100;
+}
+
+.musicBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(244, 114, 182, 0.35);
+  color: #be185d;
+  box-shadow: 0 8px 20px -4px rgba(236, 72, 153, 0.25);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  user-select: none;
+}
+
+.musicBtn:hover {
+  background: rgba(255, 255, 255, 0.98);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -4px rgba(236, 72, 153, 0.35);
+  border-color: rgba(244, 114, 182, 0.6);
+}
+
+.playing {
+  background: rgba(253, 242, 248, 0.95);
+  border-color: #f472b6;
+  color: #9d174d;
+}
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.musicIcon {
+  color: #ec4899;
+  animation: pulseBeat 1.5s infinite;
+}
+
+.mutedIcon {
+  color: #9ca3af;
+}
+
+@keyframes pulseBeat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+.audioBars {
+  display: flex;
+  align-items: flex-end;
+  gap: 2.5px;
+  height: 14px;
+}
+
+.bar {
+  width: 3px;
+  background: #ec4899;
+  border-radius: 2px;
+  animation: danceBar 1s ease-in-out infinite alternate;
+}
+
+.bar:nth-child(1) { height: 60%; animation-delay: 0.1s; }
+.bar:nth-child(2) { height: 100%; animation-delay: 0.3s; }
+.bar:nth-child(3) { height: 40%; animation-delay: 0.2s; }
+
+@keyframes danceBar {
+  0% { height: 20%; }
+  100% { height: 100%; }
+}
+
+.btnLabel {
+  font-size: 12px;
+  letter-spacing: -0.2px;
+}
+
+@media (max-width: 640px) {
+  .musicContainer {
+    top: 12px;
+    right: 12px;
+  }
+
+  .musicBtn {
+    padding: 6px 12px;
+  }
+
+  .btnLabel {
+    display: none; /* Giữ icon gọn nhẹ trên màn hình điện thoại */
+  }
+}

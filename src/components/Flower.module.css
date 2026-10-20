@@ -1,0 +1,361 @@
+.flowerWrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  z-index: 10;
+  transition: filter 0.3s ease;
+}
+
+.flowerWrapper:focus-visible {
+  outline: 3px solid var(--primary-pink);
+  outline-offset: 6px;
+  border-radius: 50%;
+}
+
+/* Kích thước hoa thông thường */
+.blossom {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 8px 16px rgba(244, 63, 94, 0.22));
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Thân cây */
+.stemContainer {
+  position: absolute;
+  top: 75%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 85px;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.stemSvg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 4px 6px rgba(21, 128, 61, 0.2));
+}
+
+/* Cánh hoa ngoài */
+.petal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 44px;
+  height: 58px;
+  margin-left: -22px;
+  margin-top: -54px;
+  border-radius: 50% 50% 45% 45% / 60% 60% 40% 40%;
+  transform-origin: 50% 90%;
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.8),
+              0 3px 8px rgba(236, 72, 153, 0.25);
+  transition: background 0.3s ease;
+}
+
+.petalVein {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  width: 2px;
+  height: 60%;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.7), transparent);
+  transform: translateX(-50%);
+  border-radius: 1px;
+}
+
+/* Cánh hoa phụ bên trong tạo độ dày và bồng bềnh */
+.innerBlossomLayer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.innerPetal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 32px;
+  height: 42px;
+  margin-left: -16px;
+  margin-top: -38px;
+  border-radius: 50% 50% 45% 45% / 60% 60% 40% 40%;
+  transform-origin: 50% 90%;
+  opacity: 0.85;
+}
+
+/* Nhụy hoa chính giữa */
+.pistil {
+  position: relative;
+  z-index: 5;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15),
+              inset 0 0 6px rgba(255, 255, 255, 0.6);
+  border: 3.5px solid #fffdfa;
+  background: #fdf2f8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Khung ảnh kỷ niệm */
+.photoPistil {
+  border-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(236, 72, 153, 0.35),
+              0 0 0 1.5px rgba(244, 114, 182, 0.4);
+}
+
+.photoContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff5f7;
+}
+
+.photoImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.photoImg.loaded {
+  opacity: 1;
+}
+
+.flowerWrapper:hover .photoImg {
+  transform: scale(1.08);
+}
+
+/* Placeholder khi ảnh chưa có hoặc lỗi */
+.photoPlaceholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #fce7f3 0%, #fed7e2 100%);
+  gap: 2px;
+  padding: 4px;
+}
+
+.placeholderHidden {
+  display: none;
+}
+
+.placeholderHeart {
+  filter: drop-shadow(0 2px 4px rgba(244, 63, 94, 0.3));
+  animation: pulseHeart 1.8s ease-in-out infinite;
+}
+
+.placeholderText {
+  font-size: 9px;
+  font-weight: 700;
+  color: #be185d;
+  letter-spacing: -0.2px;
+}
+
+.photoGlowRing {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  box-shadow: inset 0 0 8px rgba(255, 255, 255, 0.6);
+  pointer-events: none;
+}
+
+/* Nhụy hoa trang trí */
+.decorativePistil {
+  background: radial-gradient(circle, #fde047 30%, #eab308 70%, #ca8a04 100%);
+  border-color: #fef08a;
+  box-shadow: 0 0 15px rgba(234, 179, 8, 0.5), inset 0 2px 6px rgba(255, 255, 255, 0.7);
+}
+
+.decorativeCenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pollenPistil {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.decorSparkle {
+  animation: sparkleTwinkle 2.5s ease-in-out infinite;
+}
+
+.pollenDots {
+  position: absolute;
+  inset: 0;
+}
+
+.dot {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #a16207;
+  opacity: 0.7;
+}
+
+.dot:nth-child(1) { top: -4px; left: 6px; }
+.dot:nth-child(2) { bottom: -4px; left: 10px; }
+.dot:nth-child(3) { top: 6px; right: -4px; }
+.dot:nth-child(4) { bottom: 6px; left: -4px; }
+
+/* Huy hiệu số kỷ niệm */
+.flowerBadge {
+  position: absolute;
+  bottom: 0px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(244, 114, 182, 0.4);
+  color: #be185d;
+  font-size: 10px;
+  font-weight: 700;
+  border-radius: 12px;
+  padding: 1px 7px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  transform: translateY(4px);
+  transition: all 0.25s ease;
+}
+
+.flowerWrapper:hover .flowerBadge {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Bông hoa lớn mở đầu */
+.largeFlower .blossom {
+  width: 170px;
+  height: 170px;
+  filter: drop-shadow(0 14px 28px rgba(244, 63, 94, 0.35));
+}
+
+.largeFlower .stemContainer {
+  height: 130px;
+  width: 50px;
+}
+
+.largeFlower .petal {
+  width: 62px;
+  height: 82px;
+  margin-left: -31px;
+  margin-top: -76px;
+}
+
+.largeFlower .innerPetal {
+  width: 46px;
+  height: 60px;
+  margin-left: -23px;
+  margin-top: -54px;
+}
+
+.largeFlower .pistil {
+  width: 82px;
+  height: 82px;
+  border-width: 5px;
+  box-shadow: 0 0 35px rgba(244, 114, 182, 0.7),
+              inset 0 0 15px rgba(255, 255, 255, 0.9);
+}
+
+/* Animations */
+@keyframes pulseHeart {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+}
+
+@keyframes sparkleTwinkle {
+  0%, 100% {
+    transform: scale(0.9) rotate(0deg);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.15) rotate(180deg);
+    opacity: 1;
+  }
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .blossom {
+    width: 92px;
+    height: 92px;
+  }
+
+  .petal {
+    width: 34px;
+    height: 46px;
+    margin-left: -17px;
+    margin-top: -42px;
+  }
+
+  .innerPetal {
+    width: 25px;
+    height: 33px;
+    margin-left: -12.5px;
+    margin-top: -29px;
+  }
+
+  .pistil {
+    width: 48px;
+    height: 48px;
+    border-width: 2.5px;
+  }
+
+  .stemContainer {
+    height: 65px;
+    width: 32px;
+  }
+
+  .flowerBadge {
+    display: none; /* Ẩn badge trên mobile để giao diện thoáng */
+  }
+
+  .largeFlower .blossom {
+    width: 145px;
+    height: 145px;
+  }
+
+  .largeFlower .petal {
+    width: 52px;
+    height: 70px;
+    margin-left: -26px;
+    margin-top: -64px;
+  }
+
+  .largeFlower .pistil {
+    width: 70px;
+    height: 70px;
+  }
+}

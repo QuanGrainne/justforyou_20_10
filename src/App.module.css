@@ -1,0 +1,101 @@
+.appContainer {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Lóe sáng trắng khi chuyển màn hình */
+.flash {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle, #ffffff 35%, #fce7f3 100%);
+  z-index: 999;
+  pointer-events: none;
+}
+
+/* ───── Màn hình mở đầu ───── */
+.intro {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(160deg, #fff0f5 0%, #fde8ed 50%, #fce2ea 100%);
+  z-index: 10;
+  padding: 20px;
+}
+
+.introGlow {
+  position: absolute;
+  width: 340px;
+  height: 340px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(251, 182, 206, 0.5) 0%,
+    rgba(254, 243, 199, 0.3) 55%,
+    transparent 78%
+  );
+  filter: blur(28px);
+  pointer-events: none;
+  animation: glowPulse 4s ease-in-out infinite alternate;
+}
+
+@keyframes glowPulse {
+  0%   { transform: scale(0.88); opacity: 0.65; }
+  100% { transform: scale(1.18); opacity: 1; }
+}
+
+.introRose {
+  margin-bottom: 22px;
+  cursor: pointer;
+  z-index: 5;
+}
+
+.introText {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  z-index: 5;
+}
+
+.introHeading {
+  font-family: var(--font-serif);
+  font-size: 28px;
+  font-weight: 600;
+  color: #4a2835;
+  text-shadow: 0 2px 10px rgba(255,255,255,0.9);
+}
+
+.tapHint {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(244, 114, 182, 0.4);
+  padding: 8px 22px;
+  border-radius: 30px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #be185d;
+  box-shadow: 0 6px 18px rgba(236,72,153,0.2);
+  cursor: pointer;
+  animation: floatUp 2s ease-in-out infinite;
+  user-select: none;
+}
+
+@keyframes floatUp {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-5px); }
+}
+
+@media (max-width: 640px) {
+  .introHeading { font-size: 22px; }
+  .tapHint { font-size: 14px; }
+}
