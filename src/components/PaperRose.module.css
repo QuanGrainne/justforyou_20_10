@@ -1,3 +1,12 @@
+@keyframes gentleSway {
+  0%, 100% {
+    transform: rotate(-1.5deg) translateY(-1px);
+  }
+  50% {
+    transform: rotate(1.5deg) translateY(1.5px);
+  }
+}
+
 .roseWrap {
   position: relative;
   display: flex;
@@ -7,6 +16,8 @@
   user-select: none;
   touch-action: manipulation;
   transform-origin: 50% 100%;
+  animation: gentleSway 5s ease-in-out infinite;
+  will-change: transform;
 }
 
 .featured {

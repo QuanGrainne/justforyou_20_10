@@ -250,21 +250,13 @@ export const PaperRose = ({
   };
 
   return (
-    <motion.div
+    <div
       className={`${styles.roseWrap} ${isFeatured ? styles.featured : ''} ${flower?.hasPhoto ? styles.hasPhotoFlower : ''}`}
-      style={{ width: size }}
-      animate={{
-        rotate: isFeatured ? [-1.2, 1.2, -1.2] : [-1.8, 1.8, -1.8],
-        y: isFeatured ? [-1, 2, -1] : [-1.5, 2, -1.5],
+      style={{
+        width: size,
+        animationDuration: `${swayDuration}s`,
+        animationDelay: `${swayDelay}s`,
       }}
-      transition={{
-        duration: swayDuration,
-        repeat: Infinity,
-        ease: 'easeInOut',
-        delay: swayDelay,
-      }}
-      whileHover={{ scale: flower?.hasPhoto ? 1.08 : 1.03, zIndex: 50 }}
-      whileTap={{ scale: flower?.hasPhoto ? 0.95 : 1 }}
       onClick={handleClick}
       role={flower?.hasPhoto ? 'button' : undefined}
       tabIndex={flower?.hasPhoto ? 0 : -1}
@@ -402,7 +394,7 @@ export const PaperRose = ({
       {hasStem && (
         <RoseStem height={stemHeight} isFeatured={isFeatured} />
       )}
-    </motion.div>
+    </div>
   );
 };
 
@@ -412,11 +404,11 @@ export const PaperRose = ({
 export function RoseStem({ height = 650, isFeatured = false }) {
   const leaves = useMemo(() => {
     const list = [];
-    const interval = isFeatured ? 72 : 62;
-    const count = Math.max(2, Math.floor((height - 30) / interval));
+    const count = isFeatured ? 3 : 2;
+    const interval = Math.max(90, Math.floor((height - 30) / (count + 1)));
 
     for (let i = 0; i < count; i++) {
-      const y = 35 + i * interval + (i % 2 === 0 ? 0 : 8);
+      const y = 45 + i * interval;
       const isRight = i % 2 === 0;
       list.push({ y, isRight, id: i });
     }
@@ -500,11 +492,13 @@ export const RoseBud = ({ colorType = 'pink', height = 110, swayDelay = 0 }) => 
   const { layers } = palette;
 
   return (
-    <motion.div
+    <div
       className={styles.budWrap}
-      style={{ height }}
-      animate={{ rotate: [-2.5, 2.5, -2.5] }}
-      transition={{ duration: 4.2, repeat: Infinity, ease: 'easeInOut', delay: swayDelay }}
+      style={{
+        height,
+        animation: 'gentleSway 4.2s ease-in-out infinite',
+        animationDelay: `${swayDelay}s`,
+      }}
     >
       <svg width="26" height="40" viewBox="0 0 26 40">
         {/* Đài hoa xanh bao bọc */}
@@ -532,6 +526,6 @@ export const RoseBud = ({ colorType = 'pink', height = 110, swayDelay = 0 }) => 
       </svg>
       {/* Cuống nụ xanh */}
       <div className={styles.budStem} />
-    </motion.div>
+    </div>
   );
 };
