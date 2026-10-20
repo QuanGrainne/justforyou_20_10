@@ -24,17 +24,21 @@ export const sendNotification = async (title, message, tags = ['rose']) => {
 
     const fullMessage = `${message}\n📱 Thiết bị: ${device}\n⏰ Thời gian: ${time}`;
 
-    await fetch(`https://ntfy.sh/${NTFY_TOPIC}`, {
+    // Sử dụng JSON payload thay vì HTTP Headers để hỗ trợ 100% tiếng Việt có dấu và Emoji
+    await fetch('https://ntfy.sh', {
       method: 'POST',
-      body: fullMessage,
       headers: {
-        Title: title,
-        Priority: 'high',
-        Tags: tags.join(','),
+        'Content-Type': 'application/json',
       },
+      body: JSON.stringify({
+        topic: NTFY_TOPIC,
+        title: title,
+        message: fullMessage,
+        priority: 4, // High priority để iPhone rung/đổ chuông và hiện pop-up tức thì
+        tags: tags,
+      }),
     });
   } catch (err) {
-    // Không bao giờ làm ảnh hưởng trải nghiệm trang web nếu lỗi mạng
     console.debug('ntfy notification error:', err);
   }
 };
