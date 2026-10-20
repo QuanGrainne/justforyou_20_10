@@ -4,6 +4,7 @@
   inset: 0;
   width: 100vw;
   height: 100vh;
+  height: 100dvh;
   overflow: hidden;
 
   /* Gradient nền: bầu trời xanh pastel chuyển sang sương mờ và xanh mint nhạt */
@@ -91,37 +92,40 @@
 
 /* ── 2 nút điều khiển ở đáy màn hình (chuẩn ảnh mẫu) ── */
 .controls {
-  position: absolute;
-  bottom: 22px;
+  position: fixed;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 24px);
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   gap: 16px;
-  z-index: 100;
+  z-index: 999;
+  width: max-content;
+  max-width: 92vw;
 }
 
 .pillBtn {
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  color: #2c3e50;
+  background: rgba(255, 255, 255, 0.95);
+  color: #1e293b;
   font-size: 14px;
-  font-weight: 500;
-  padding: 9px 24px;
-  border-radius: 30px;
-  border: 1px solid rgba(220, 224, 230, 0.85);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.05);
+  font-weight: 600;
+  padding: 10px 24px;
+  border-radius: 999px;
+  border: 1.5px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15), 0 2px 6px rgba(0, 0, 0, 0.08);
   cursor: pointer;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   white-space: nowrap;
   font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .pillBtn:hover {
   background: #ffffff;
-  color: #1a202c;
+  color: #0f172a;
   transform: translateY(-2px);
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.13);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
 }
 
 .pillBtn:active {
@@ -140,18 +144,26 @@
     transform: translate(-50%, -50%) scale(0.68);
   }
   .controls {
-    bottom: 14px;
-    gap: 10px;
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 20px);
+    gap: 12px;
   }
   .pillBtn {
-    font-size: 12px;
-    padding: 7px 18px;
+    font-size: 13px;
+    padding: 9px 20px;
   }
 }
 
 @media (max-width: 420px) {
   .absItem {
     transform: translate(-50%, -50%) scale(0.58);
+  }
+  .controls {
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 18px);
+    gap: 10px;
+  }
+  .pillBtn {
+    font-size: 12px;
+    padding: 8px 16px;
   }
 }
 
